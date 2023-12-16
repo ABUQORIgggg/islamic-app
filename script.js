@@ -19,12 +19,18 @@ function fetchPrayerTimings() {
     let minute = date.getMinutes();
     let time = `${hours}:${minute}`;
 
-    // Fetch prayer timings from the Aladhan API
-    fetch(`http://api.aladhan.com/v1/timingsByCity?city=${encodeURIComponent(city.innerHTML)}&country=${encodeURIComponent(country.innerHTML)}&method=8`)
+    // Fetch prayer timings from the Aladhan API using HTTPS
+    fetch(`https://api.aladhan.com/v1/timingsByCity?city=${encodeURIComponent(city.innerHTML)}&country=${encodeURIComponent(country.innerHTML)}&method=8`)
         .then(res => res.json())
         .then(data => {
             console.log(data);
-            console.log(data);
+            p[0].innerHTML = data.data.timings.Fajr;
+            p[1].innerHTML = data.data.timings.Sunrise;
+            p[2].innerHTML = data.data.timings.Dhuhr;
+            p[3].innerHTML = data.data.timings.Asr;
+            p[4].innerHTML = data.data.timings.Maghrib;
+            p[5].innerHTML = data.data.timings.Isha;
+
             p[0].innerHTML = data.data.timings.Fajr;
             p[1].innerHTML = data.data.timings.Sunrise;
             p[2].innerHTML = data.data.timings.Dhuhr;
@@ -70,12 +76,17 @@ function fetchPrayerTimings() {
             } else {
                 card[5].style.color = "#fff";
             }
+        })
+        .catch(error => {
+            console.error('Error fetching prayer timings:', error);
+            // Handle the error, e.g., display a message to the user
         });
 }
 
 // Initial fetch and display
 fetchPrayerTimings();
 
+// Function to set background image
 function bg() {
     const unsplashAccessKey = 'b0v6HpzW8tWDb3-7nGc-KU6vWzknsSXySka7Ps89_6c';
     let url = `https://api.unsplash.com/search/photos?query=${encodeURIComponent(city.innerHTML)}&category=city&content_filter=high`;
@@ -91,17 +102,17 @@ function bg() {
             let random = Math.floor(Math.random() * data.results.length);
             let randomImageUrl = data.results[random].urls.full;
 
-            body.style.height = "100vh"
-            body.style.overflow = "hidden"
+            body.style.height = "100vh";
+            body.style.overflow = "hidden";
             body.style.backgroundImage = `url(${randomImageUrl})`;
             body.style.backgroundSize = "cover";
-            body.style.backgroundPosition = "center"
+            body.style.backgroundPosition = "center";
             console.log(body.style.backgroundImage);
         });
 }
 
+bg();
 
-bg()
 // Event listener for button click
 btn.addEventListener('click', (e) => {
     e.preventDefault();
@@ -114,7 +125,31 @@ btn.addEventListener('click', (e) => {
     console.log("country: " + country);
     console.log("city: " + city);
 
-    bg();
     // Fetch and display updated prayer timings
     fetchPrayerTimings();
+    bg();
+});
+
+// PWA installation functions
+function installPWA() {
+    const installPrompt = window.deferredPrompt;
+
+    if (installPrompt) {
+        installPrompt.prompt();
+
+        installPrompt.userChoice.then(choiceResult => {
+            if (choiceResult.outcome === 'accepted') {
+                console.log('User accepted the install prompt');
+            } else {
+                console.log('User dismissed the install prompt');
+            }
+
+            window.deferredPrompt = null;
+        });
+    }
+}
+
+window.addEventListener('beforeinstallprompt', event => {
+    event.preventDefault();
+    window.deferredPrompt = event;
 });
