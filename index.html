@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="./tailwind.config.js"></script>
+    <link rel="manifest" href="/manifest.json">
+    <script>
+      if ('serviceWorker' in navigator && window.location.hostname === 'localhost') {
+        navigator.serviceWorker.register('/sw.js')
+          .then(registration => console.log('Service Worker registered with scope:', registration.scope))
+          .catch(error => console.error('Service Worker registration failed:', error));
+      }
+    </script>
+    
+</head>
+
+<body>
+    <main class="container mx-auto max-w-[90%] text-white">
+        <section class="search container mx-auto py-4 px-3 my-4 bg-slate-800 rounded-2xl text-white">
+            <form action="" class="flex justify-between gap-10">
+                <input type="text" placeholder="Type the country"
+                    class="flex-1 py-2 rounded-lg px-4 outline-none text-black">
+                <input type="text" placeholder="Type the city"
+                    class="flex-1 py-2 rounded-lg px-4 outline-none text-black">
+                <button class="max-w-[140px] py-2 rounded-lg px-4 bg-emerald-700">Submit</button>
+            </form>
+        </section>
+        <section
+            class="prayes_time flex flex-col  font-semibold py-9 mx-auto container bg-emerald-600 px-5 rounded-3xl">
+            <div class="flex items-center justify-center gap-10 mb-5">
+                <div class="flex gap-2">
+                    <span>Country:</span>
+                    <span id="country"></span>
+                </div>
+                <div class="flex gap-2">
+                    <span>City:</span>
+                    <span id="city"></span>
+                </div>
+            </div>
+            <div class="flex justify-between items-center">
+                <div class="card">
+                    <h4>Bomdod</h4>
+                    <p></p>
+                </div>
+                <div class="card">
+                    <h4>Quyosh</h4>
+                    <p></p>
+                </div>
+                <div class="card">
+                    <h4>Peshin</h4>
+                    <p></p>
+                </div>
+                <div class="card">
+                    <h4>Asr</h4>
+                    <p></p>
+                </div>
+                <div class="card">
+                    <h4>Shom</h4>
+                    <p></p>
+                </div>
+                <div class="card">
+                    <h4>Xufton</h4>
+                    <p></p>
+                </div>
+            </div>
+        </section>
+    </main>
+    <script src="./script.js"></script>
+    <button onclick="installPWA()">Install PWA</button>
+
+    <script>
+        function installPWA() {
+            const installPrompt = window.deferredPrompt;
+
+            if (installPrompt) {
+                installPrompt.prompt();
+
+                installPrompt.userChoice.then(choiceResult => {
+                    if (choiceResult.outcome === 'accepted') {
+                        console.log('User accepted the install prompt');
+                    } else {
+                        console.log('User dismissed the install prompt');
+                    }
+
+                    window.deferredPrompt = null;
+                });
+            }
+        }
+
+        window.addEventListener('beforeinstallprompt', event => {
+            event.preventDefault();
+            window.deferredPrompt = event;
+        });
+    </script>
+</body>
+
+</html>
