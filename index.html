@@ -4,11 +4,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="description" content="Islamic app">
+    <meta name="keywords" content="Prayers Time">
+    <meta name="theme-color" content="#000">
     <title>Document</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="./tailwind.config.js"></script>
     <link rel="shortcut icon" href="./image/512.png" type="image/x-icon">
     <link rel="manifest" href="/manifest.json">
+    <style>
+        /* Add any additional styles if needed */
+        body {
+            font-family: 'Arial', sans-serif;
+            /* Specify a preferred font */
+            margin: 0;
+            /* Remove default margin */
+            padding: 0;
+            /* Remove default padding */
+        }
+    </style>
     <script>
         if ('serviceWorker' in navigator && window.location.protocol === 'https:') {
             navigator.serviceWorker.register('/sw.js')
@@ -30,7 +45,8 @@
                 <button class="w-full md:w-auto py-2 rounded-lg px-4 bg-blue-500 text-white">Submit</button>
             </form>
         </section>
-        <section class="prayes_time flex flex-col font-semibold py-9 mx-auto container bg-blue-400 bg-opacity-60 rounded-lg px-5">
+        <section
+            class="prayes_time flex flex-col font-semibold py-9 mx-auto container bg-blue-400 bg-opacity-60 rounded-lg px-5">
             <div class="flex flex-col md:flex-row items-center justify-between gap-5 mb-5 text-white">
                 <div class="flex gap-2">
                     <span>Country:</span>
